@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<div class="container w-75">
+  <div class="row mb-5">
+    <div class="img-fluid col-lg-6 col-sm-12">
+      <img src="{{ data.thumbnail_url }}" class="thumbnail">
+    </div>
+    <div class="col-lg-6 col-sm-12 d-flex align-items-center">
+      <div class="video-info">
+        <a href='https://www.youtube.com/video/{{data.id}}' class="text-decoration-none">{{ data.title }}</a><br>
+        <i class="bi bi-person"></i> <a href="{{ data.author_url }}" class="text-decoration-none">{{ data.author
+          }}</a><br>
+        <i class="bi bi-calendar-date-fill"></i> {{ data.upload_date }}<br>
+        <i class="bi bi-eye"></i> {{ data.view_count }} views<br>
+        <i class="bi bi-clock"></i> {{ '%02d' % data.length[0] + ':' + '%02d' % data.length[1] + ':' + '%02d' % data.length[2] }}
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion mb-5">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+          Trim video
+        </button>
+      </h2>
+      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse"
+        aria-labelledby="panelsStayOpen-headingOne">
+        <div class="accordion-body">
+
+          <input class="form-check-input" type="checkbox" value="" id="trim-toggle" value="false">
+          <label class="form-check-label user-select-none" for="trim-toggle">
+            Trim video
+          </label>
+
+          <br>
+
+          <div id="time-start-input" class="mb-2">
+            <label for="appt" class="user-select-none">Starting time of your video:</label>
+            <input type="number" class="form-control time-input d-inline" min="0" max="12"
+              value="00" id="start-h" />h
+            <input type="number" class="form-control time-input d-inline" min="0" max="60"
+              value="00" id="start-m"/>m
+            <input type="number" pattern="[0-9]*" class="form-control time-input d-inline" min="0" max="60"
+              value="00" id="start-s"/>s
+            <input type="number" pattern="[0-9]*" class="form-control time-input d-inline" min="0" max="60"
+              value="000" id="start-ms"/>ms
+          </div>
+
+          <div id="time-end-input">
+            <label for="appt" class="user-select-none">Ending time of your video:&nbsp;</label>
+            <input type="number" name="time-end" class="form-control time-input d-inline" min="0" max="12"
+              value="{{ data.length[0] }}" />h
+            <input type="number" name="time-end" class="form-control time-input d-inline" min="0" max="60"
+              value="{{ data.length[1] }}" />m
+            <input type="number" name="time-end" class="form-control time-input d-inline" min="0" max="60"
+              value="{{ data.length[2] }}" />s
+            <input type="number" name="time-end" class="form-control time-input d-inline" min="0" max="60"
+              value="000" />ms
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+          data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+          Video options
+        </button>
+      </h2>
+      <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show"
+        aria-labelledby="panelsStayOpen-headingTwo">
+        <div class="accordion-body d-flex justify-content-center">
+          <table class="col-lg-6">
+            <tr class="text-center">
+              <td colspan="3">Download options:</td>
+            </tr>
+            {% for option in data.options %}
+            <tr">
+              <td>{{ option["resolution"] }} {{ option["fps"] }} </td>
+              <td>{{ option["size"] }} MB</td>
+              <td><a href="{{ url_for('download', id=data.id, itag=option['itag']) }}"
+                  class="btn btn-primary btn-sm download-link">Download</a></td>
+              </tr>
+              {% endfor %}
+              <tr>
+                <td colspan="3">Audio-only options:</td>
+              </tr>
+              {% for option in data.audio %}
+              <tr>
+                <td>{{ option["abr"] }} </td>
+                <td>{{ (option["filesize"] / 100000)|round(1, 'floor') }} MB</td>
+                <td><a href="{{ url_for('download', id=data.id, itag=option['itag']) }}"
+                    class="btn btn-primary btn-sm download-link">Download</a></td>
+              </tr>
+              {% endfor %}
+          </table>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+{% endblock %}

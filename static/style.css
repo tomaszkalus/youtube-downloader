@@ -1,0 +1,59 @@
+table {
+    border-collapse: collapse;
+}
+
+table,
+th,
+td {
+    border: none;
+    padding: 10px;
+}
+
+/* #thumbnail{
+    width: 100%;
+    padding-bottom: 56.25%;
+    position: relative;
+    background: blue;
+    overflow: hidden;
+} */
+
+/* .image-cropped {
+    overflow: hidden;
+}
+
+.image-cropped img {
+    border: 1px solid black;
+    width: 320px;
+    margin: -30px 0;
+    float:right;
+} */
+
+.table-even {
+    background-color: rgb(250, 250, 250);
+}
+
+.table-odd {
+    background-color: rgb(235, 235, 235);
+}
+
+table,
+th,
+td {
+    border: thin solid rgb(196, 195, 195);
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.thumbnail {
+    width: 90%;
+}
+
+.video-info{
+    font-size: 100%;
+}
+
+.time-input{
+    width: 4em;
+}
